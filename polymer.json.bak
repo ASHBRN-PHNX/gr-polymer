@@ -1,0 +1,68 @@
+{
+  "entrypoint": "index.html",
+  "shell": "src/gr-app.js",
+  "sources": ["images/**/*"],
+  "extraDependencies": [
+    "manifest.json",
+    "node_modules/@webcomponents/webcomponentsjs/*.js",
+    "!node_modules/@webcomponents/webcomponentsjs/gulpfile.js",
+    "node_modules/@webcomponents/webcomponentsjs/bundles/*.js"
+  ],
+  "builds": [
+    {
+      "name": "esm-bundled",
+      "browserCapabilities": ["es2015", "modules"],
+      "basePath": true,
+      "js": {
+        "minify": true
+      },
+      "css": {
+        "minify": true
+      },
+      "html": {
+        "minify": true
+      },
+      "bundle": true,
+      "addServiceWorker": true
+    },
+    {
+      "name": "es6-bundled",
+      "basePath": true,
+      "browserCapabilities": ["es2015"],
+      "js": {
+        "minify": true,
+        "transformModulesToAmd": true
+      },
+      "css": {
+        "minify": true
+      },
+      "html": {
+        "minify": true
+      },
+      "bundle": true,
+      "addServiceWorker": true
+    },
+    {
+      "name": "es5-bundled",
+      "basePath": true,
+      "js": {
+        "minify": true,
+        "compile": true,
+        "transformModulesToAmd": true
+      },
+      "css": {
+        "minify": true
+      },
+      "html": {
+        "minify": true
+      },
+      "bundle": true,
+      "addServiceWorker": true
+    }
+  ],
+  "moduleResolution": "node",
+  "npm": true,
+  "lint": {
+    "rules": ["polymer-3"]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "name": "guest-registration-app",
+  "version": "0.0.1",
+  "description": "",
+  "author": "Alisdair Frost",
+  "license": "MIT",
+  "repository": "",
+  "scripts": {
+    "start": "polymer serve",
+    "build": "polymer build",
+    "lint": "polymer lint",
+    "test": "polymer test"
+  },
+  "dependencies": {
+    "@polymer/app-layout": "^3.0.2",
+    "@polymer/app-route": "^3.0.2",
+    "@polymer/iron-flex-layout": "^3.0.1",
+    "@polymer/iron-form": "^3.0.1",
+    "@polymer/iron-iconset-svg": "^3.0.1",
+    "@polymer/iron-image": "^3.0.1",
+    "@polymer/iron-media-query": "^3.0.1",
+    "@polymer/iron-pages": "^3.0.1",
+    "@polymer/iron-selector": "^3.0.1",
+    "@polymer/paper-button": "^3.0.1",
+    "@polymer/paper-icon-button": "^3.0.2",
+    "@polymer/paper-input": "^3.0.2",
+    "@polymer/polymer": "^3.2.0",
+    "@webcomponents/webcomponentsjs": "^2.2.10",
+    "polymer-cli": "^1.9.8",
+    "prpl-server": "^1.4.0",
+    "restify": "^8.3.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-google": "^0.12.0",
+    "eslint-config-prettier": "^4.2.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "prettier": "^1.17.0",
+    "wct-browser-legacy": "^1.0.2"
+  },
+  "engines": {
+    "node": ">=8.0"
+  }
+}
