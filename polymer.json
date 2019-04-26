@@ -1,4 +1,5 @@
 {
+  "autoBasePath": true,
   "entrypoint": "index.html",
   "shell": "src/gr-app.js",
   "sources": ["images/**/*"],
@@ -11,8 +12,8 @@
   "builds": [
     {
       "name": "esm-bundled",
-      "browserCapabilities": ["es2015", "modules"],
       "basePath": true,
+      "browserCapabilities": ["es2015", "modules"],
       "js": {
         "minify": true
       },
