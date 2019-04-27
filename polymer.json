@@ -1,14 +1,5 @@
 {
   "autoBasePath": true,
-  "entrypoint": "index.html",
-  "shell": "src/gr-app.js",
-  "sources": ["images/**/*"],
-  "extraDependencies": [
-    "manifest.json",
-    "node_modules/@webcomponents/webcomponentsjs/*.js",
-    "!node_modules/@webcomponents/webcomponentsjs/gulpfile.js",
-    "node_modules/@webcomponents/webcomponentsjs/bundles/*.js"
-  ],
   "builds": [
     {
       "name": "esm-bundled",
@@ -27,9 +18,18 @@
       "addServiceWorker": true
     }
   ],
-  "moduleResolution": "node",
-  "npm": true,
+  "entrypoint": "index.html",
+  "extraDependencies": [
+    "manifest.json",
+    "node_modules/@webcomponents/webcomponentsjs/bundles/*.js",
+    "!node_modules/@webcomponents/webcomponentsjs/gulpfile.js",
+    "node_modules/@webcomponents/webcomponentsjs/*.js"
+  ],
   "lint": {
     "rules": ["polymer-3"]
-  }
+  },
+  "moduleResolution": "node",
+  "npm": true,
+  "shell": "src/gr-app.js",
+  "sources": ["images/**/*", "package.json", "src/**/*"]
 }

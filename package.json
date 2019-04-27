@@ -1,6 +1,6 @@
 {
   "name": "guest-registration-app",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "",
   "author": "Alisdair Frost",
   "license": "MIT",
@@ -26,9 +26,12 @@
     "@polymer/paper-input": "^3.0.2",
     "@polymer/polymer": "^3.2.0",
     "@webcomponents/webcomponentsjs": "^2.2.10",
+    "glob": "^7.1.3",
     "polymer-cli": "^1.9.8",
     "prpl-server": "^1.4.0",
-    "restify": "^8.3.1"
+    "require-directory": "^2.1.1",
+    "restify": "^8.3.1",
+    "restify-router": "^0.5.1"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
