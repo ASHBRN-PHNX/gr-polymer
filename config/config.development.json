@@ -4,6 +4,7 @@
   },
   "server": {
     "acceptable": ["application/json"],
+    "basePath": "/api/v1/",
     "defaultVersion": "1.0.0",
     "name": "localhost",
     "port": 3000

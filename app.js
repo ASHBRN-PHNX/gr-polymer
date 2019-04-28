@@ -4,16 +4,11 @@ if (!process.env.NODE_ENV) {
   process.env.NODE_ENV = 'development';
 }
 
-const glob = require('glob');
-const path = require('path');
 const prpl = require('prpl-server');
 const restify = require('restify');
 
-const config = require('./config/config');
+const config = require(`./config/config.${process.env.NODE_ENV}.json`);
 const prplConfig = require('./build/polymer.json');
-
-const Router = require('restify-router').Router;
-const router = new Router();
 
 /**
  * Frontend Server
@@ -36,8 +31,6 @@ restifyServer.use(restify.plugins.acceptParser(restifyServer.acceptable));
 restifyServer.use(restify.plugins.bodyParser());
 restifyServer.use(restify.plugins.queryParser());
 
-glob
-  .sync(path.join(__dirname, 'modules/*/routes/*.js'))
-  .map(file => router.add('/v1', require(file)));
-
-restifyServer.listen(config.server.port);
+restifyServer.listen(config.server.port, () => {
+  require('./routes/routes')(restifyServer);
+});
