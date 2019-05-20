@@ -4,7 +4,7 @@
   "description": "",
   "author": "Alisdair Frost",
   "license": "MIT",
-  "repository": "",
+  "repository": "https://github.com/pacificfrost/guest-registration.git",
   "scripts": {
     "start": "polymer serve",
     "build": "polymer build",
@@ -14,10 +14,11 @@
   "dependencies": {
     "@polymer/app-layout": "^3.0.2",
     "@polymer/app-route": "^3.0.2",
+    "@polymer/iron-ajax": "^3.0.1",
     "@polymer/iron-flex-layout": "^3.0.1",
     "@polymer/iron-form": "^3.0.1",
     "@polymer/iron-iconset-svg": "^3.0.1",
-    "@polymer/iron-image": "^3.0.1",
+    "@polymer/iron-image": "^3.0.2",
     "@polymer/iron-media-query": "^3.0.1",
     "@polymer/iron-pages": "^3.0.1",
     "@polymer/iron-selector": "^3.0.1",
@@ -26,15 +27,20 @@
     "@polymer/paper-input": "^3.0.2",
     "@polymer/polymer": "^3.2.0",
     "@webcomponents/webcomponentsjs": "^2.2.10",
-    "polymer-cli": "^1.9.8",
+    "acl-restify": "0.0.3",
+    "mongoose": "^5.5.7",
+    "passport-jwt": "^4.0.0",
+    "passport-restify": "^1.0.1",
+    "polymer-cli": "^1.9.9",
     "prpl-server": "^1.4.0",
-    "restify": "^8.3.1"
+    "restify": "^8.3.2",
+    "restify-cors-middleware": "^1.1.1"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
     "eslint-config-google": "^0.12.0",
     "eslint-config-prettier": "^4.2.0",
-    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-prettier": "^3.1.0",
     "prettier": "^1.17.0",
     "wct-browser-legacy": "^1.0.2"
   },

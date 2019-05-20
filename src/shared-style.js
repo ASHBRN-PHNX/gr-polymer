@@ -8,6 +8,7 @@ documentContainer.innerHTML = `
       <style>
         .button {
           display: inline-block;
+          text-align: center;
         }
 
         .button--facebook {
@@ -23,16 +24,13 @@ documentContainer.innerHTML = `
           @apply --layout-horizontal;
         }
 
+        .button-group--center {
+          @apply --layout-center-justified;
+          margin: auto;
+        }
+
         .button-group__inner {
           display: inline-block;
-        }
-
-        .button-group--center {
-          @apply --layout-center-justfied;
-        }
-
-        .button-group--end {
-          @apply --layout-end-justfied;
         }
 
         .hero {

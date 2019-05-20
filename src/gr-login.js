@@ -1,8 +1,8 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 
-import '@polymer/iron-image/iron-image.js';
-import '@polymer/iron-form/iron-form.js';
 import '@polymer/iron-flex-layout/iron-flex-layout.js';
+import '@polymer/iron-form/iron-form.js';
+import '@polymer/iron-image/iron-image.js';
 
 import '@polymer/paper-button/paper-button.js';
 import '@polymer/paper-input/paper-input.js';
@@ -38,25 +38,26 @@ class GrLogin extends PolymerElement {
       <div class="page">
         <div class="page__container">
           <h1>Login</h1>
-          <iron-form>
-            <form>
+
+          <iron-form content-type="application/json" handle-as="json" id="form">
+            <form action="http://127.0.0.1:3000/api/v1/login" method="GET">
               <paper-input
                 label="username"
                 name="username"
+                required
                 type="text"
               ></paper-input>
               <paper-input
                 label="password"
                 name="password"
+                required
                 type="password"
               ></paper-input>
 
-              <div class="button-group button-group--end">
-                <div class="button-group__inner">
-                  <paper-button class="button" type="submit"
-                    >submit</paper-button
-                  >
-                </div>
+              <div class="button-group button-group--center">
+                <paper-button class="button" on-click="_submit" raised
+                  >submit</paper-button
+                >
               </div>
             </form>
           </iron-form>
@@ -77,12 +78,12 @@ class GrLogin extends PolymerElement {
           </div>
 
           <div class="button-group button-group--center">
-            <div class="button-group__inner">
-              <paper-button class="button button--facebook"
-                >facebook</paper-button
-              >
-              <paper-button class="button button--google">google</paper-button>
-            </div>
+            <paper-button class="button button--facebook" raised
+              >facebook</paper-button
+            >
+            <paper-button class="button button--google" raised
+              >google</paper-button
+            >
           </div>
         </div>
       </div>
@@ -95,6 +96,38 @@ class GrLogin extends PolymerElement {
 
   static get properties() {
     return {};
+  }
+
+  constructor() {
+    super();
+
+    this.addEventListener('iron-form-response', () =>
+      this._onIronFormResponse()
+    );
+    this.addEventListener('iron-form-error', () => this._onIronFormResponse());
+  }
+
+  /**
+   * On Iron Form Response
+   * @param {object} response
+   */
+  _onIronFormResponse(response) {
+    console.log('TCL: GrLogin -> _onIronFormResponse -> response', response);
+  }
+
+  /**
+   * On Iron Form Error
+   * @param {object} response
+   */
+  _onIronFormError(response) {
+    console.log('TCL: GrLogin -> _onIronFormError -> response', response);
+  }
+
+  /**
+   * Submit
+   */
+  _submit() {
+    this.$.form.submit();
   }
 }
 
