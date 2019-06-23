@@ -6,10 +6,10 @@
   "license": "MIT",
   "repository": "https://github.com/pacificfrost/guest-registration.git",
   "scripts": {
-    "start": "polymer serve",
-    "build": "polymer build",
-    "lint": "polymer lint",
-    "test": "polymer test"
+    "start-backend": "node app-be.js",
+    "start-database": "mongod",
+    "start-develop": "polymer serve",
+    "build": "polymer build"
   },
   "dependencies": {
     "@polymer/app-layout": "^3.0.2",
@@ -28,20 +28,24 @@
     "@polymer/polymer": "^3.2.0",
     "@webcomponents/webcomponentsjs": "^2.2.10",
     "acl-restify": "0.0.3",
-    "mongoose": "^5.5.7",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.6.0",
+    "npm-check-updates": "^3.1.11",
+    "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-restify": "^1.0.1",
-    "polymer-cli": "^1.9.9",
     "prpl-server": "^1.4.0",
-    "restify": "^8.3.2",
-    "restify-cors-middleware": "^1.1.1"
+    "restify": "^8.3.3",
+    "restify-cors-middleware": "^1.1.1",
+    "restify-errors": "^8.0.0"
   },
   "devDependencies": {
-    "eslint": "^5.16.0",
-    "eslint-config-google": "^0.12.0",
-    "eslint-config-prettier": "^4.2.0",
+    "eslint": "^6.0.0",
+    "eslint-config-google": "^0.13.0",
+    "eslint-config-prettier": "^5.0.0",
     "eslint-plugin-prettier": "^3.1.0",
-    "prettier": "^1.17.0",
+    "nodemon": "^1.19.1",
+    "prettier": "^1.18.2",
     "wct-browser-legacy": "^1.0.2"
   },
   "engines": {
