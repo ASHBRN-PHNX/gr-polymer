@@ -1,30 +1,30 @@
-import { PolymerElement, html } from '@polymer/polymer/polymer-element.js'
+import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 
 import {
   setPassiveTouchGestures,
   setRootPath,
-} from '@polymer/polymer/lib/utils/settings.js'
+} from '@polymer/polymer/lib/utils/settings.js';
 
-import '@polymer/app-layout/app-drawer/app-drawer.js'
-import '@polymer/app-layout/app-drawer-layout/app-drawer-layout.js'
-import '@polymer/app-layout/app-header/app-header.js'
-import '@polymer/app-layout/app-header-layout/app-header-layout.js'
-import '@polymer/app-layout/app-scroll-effects/app-scroll-effects.js'
-import '@polymer/app-layout/app-toolbar/app-toolbar.js'
+import '@polymer/app-layout/app-drawer/app-drawer.js';
+import '@polymer/app-layout/app-drawer-layout/app-drawer-layout.js';
+import '@polymer/app-layout/app-header/app-header.js';
+import '@polymer/app-layout/app-header-layout/app-header-layout.js';
+import '@polymer/app-layout/app-scroll-effects/app-scroll-effects.js';
+import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 
-import '@polymer/app-route/app-location.js'
-import '@polymer/app-route/app-route.js'
+import '@polymer/app-route/app-location.js';
+import '@polymer/app-route/app-route.js';
 
-import '@polymer/iron-pages/iron-pages.js'
-import '@polymer/iron-flex-layout/iron-flex-layout.js'
-import '@polymer/iron-selector/iron-selector.js'
+import '@polymer/iron-pages/iron-pages.js';
+import '@polymer/iron-flex-layout/iron-flex-layout.js';
+import '@polymer/iron-selector/iron-selector.js';
 
-import '@polymer/paper-button/paper-button.js'
-import '@polymer/paper-icon-button/paper-icon-button.js'
+import '@polymer/paper-button/paper-button.js';
+import '@polymer/paper-icon-button/paper-icon-button.js';
 
-setPassiveTouchGestures(true)
+setPassiveTouchGestures(true);
 
-setRootPath(GrAppGlobals.rootPath)
+setRootPath(GrAppGlobals.rootPath);
 
 class GrApp extends PolymerElement {
   static get template() {
@@ -142,11 +142,11 @@ class GrApp extends PolymerElement {
           </iron-pages>
         </app-header-layout>
       </app-drawer-layout>
-    `
+    `;
   }
 
   static get is() {
-    return 'gr-app'
+    return 'gr-app';
   }
 
   static get properties() {
@@ -158,11 +158,11 @@ class GrApp extends PolymerElement {
       },
       routeData: Object,
       subroute: Object,
-    }
+    };
   }
 
   static get observers() {
-    return ['_routePageChanged(routeData.page)']
+    return ['_routePageChanged(routeData.page)'];
   }
 
   /**
@@ -170,12 +170,12 @@ class GrApp extends PolymerElement {
    */
   _routePageChanged(page) {
     if (page && (page !== 'home' && page !== 'login') && !this.user) {
-      this.page = 'error'
+      this.page = 'error';
     } else {
-      !page ? (this.page = 'home') : (this.page = page)
+      !page ? (this.page = 'home') : (this.page = page);
     }
 
-    this.$.drawer.close()
+    this.$.drawer.close();
   }
 
   /**
@@ -184,23 +184,23 @@ class GrApp extends PolymerElement {
   _pageChanged(page) {
     switch (page) {
       case 'event':
-        import('./gr-event.js')
-        break
+        import('./gr-event.js');
+        break;
       case 'guestbook':
-        import('./gr-guestbook.js')
-        break
+        import('./gr-guestbook.js');
+        break;
       case 'home':
-        import('./gr-home.js')
-        break
+        import('./gr-home.js');
+        break;
       case 'login':
-        import('./gr-login.js')
-        break
+        import('./gr-login.js');
+        break;
       case 'venue':
-        import('./gr-venue.js')
-        break
+        import('./gr-venue.js');
+        break;
       default:
-        import('./gr-error.js')
-        break
+        import('./gr-error.js');
+        break;
     }
   }
 
@@ -208,8 +208,8 @@ class GrApp extends PolymerElement {
    *
    */
   _showError() {
-    this.page = 'error'
+    this.page = 'error';
   }
 }
 
-window.customElements.define(GrApp.is, GrApp)
+window.customElements.define(GrApp.is, GrApp);

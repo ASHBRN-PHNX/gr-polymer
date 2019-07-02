@@ -47,7 +47,8 @@ const deleteUser = async (req, res, next) => {
   try {
     await User.findOneAndRemove({ _id: req.params.id });
 
-    res.send(204);
+    res.status(204);
+    res.send({ success: 'User deleted' });
 
     next();
   } catch (err) {
