@@ -13,7 +13,7 @@ options.secretOrKey = config.JWT_SECRET;
 
 passport.use(
   new JwtStrategy(options, async (jwtPayload, done) => {
-    await User.findOne({ _id: jwtPayload.id }, (err, user) => {
+    await User.findOne({ _id: jwtPayload._id }, (err, user) => {
       if (err) {
         return done(err, false);
       }

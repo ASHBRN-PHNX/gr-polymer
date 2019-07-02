@@ -44,7 +44,7 @@ UserSchema.methods.generateJWT = function(User) {
 
   exp.setDate(today.getDate() + 60);
 
-  return jwt.sign({ id: User.id }, config.JWT_SECRET, { expiresIn: '1d' });
+  return jwt.sign({ _id: User._id }, config.JWT_SECRET, { expiresIn: '1d' });
 };
 
 /**
@@ -64,6 +64,8 @@ UserSchema.methods.setPassword = function(password) {
  * @return {Object}
  */
 UserSchema.methods.toAuthJSON = function() {
+  if (this === null) return null;
+
   return {
     bio: this.bio,
     email: this.email,
@@ -72,8 +74,9 @@ UserSchema.methods.toAuthJSON = function() {
     username: this.username,
   };
 };
+
 /**
- * To auth JSON
+ * To response JSON
  * @return {Object}
  */
 UserSchema.methods.toResponseJSON = function() {
@@ -81,6 +84,7 @@ UserSchema.methods.toResponseJSON = function() {
     bio: this.bio,
     createdAt: this.createdAt,
     email: this.email,
+    id: this._id,
     image: this.image,
     updatedAt: this.updatedAt,
     username: this.username,

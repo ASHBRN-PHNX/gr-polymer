@@ -50,8 +50,8 @@ const deleteUser = async (req, res, next) => {
     res.send(204);
 
     next();
-  } catch (e) {
-    return next(new errors.InvalidContentError(err));
+  } catch (err) {
+    return next(new errors.InvalidContentError(err.message));
   }
 };
 
@@ -65,11 +65,13 @@ const getUser = async (req, res, next) => {
   try {
     const user = await User.findOne({ _id: req.params.id });
 
-    res.send(user.toResponseJSON());
+    user === null
+      ? res.send({ message: 'User not found' })
+      : res.send(user.toResponseJSON());
 
     next();
-  } catch (e) {
-    return next(new errors.InvalidContentError(err));
+  } catch (err) {
+    return next(new errors.InvalidContentError(err.message));
   }
 };
 
@@ -86,8 +88,8 @@ const getUsers = async (req, res, next) => {
     res.send(user);
 
     next();
-  } catch (e) {
-    return next(new errors.InvalidContentError(err));
+  } catch (err) {
+    return next(new errors.InvalidContentError(err.message));
   }
 };
 
@@ -104,8 +106,8 @@ const updateUser = async (req, res, next) => {
     res.send(user);
 
     next();
-  } catch (e) {
-    return next(new errors.InvalidContentError(err));
+  } catch (err) {
+    return next(new errors.InvalidContentError(err.message));
   }
 };
 
