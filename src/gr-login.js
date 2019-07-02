@@ -40,7 +40,7 @@ class GrLogin extends PolymerElement {
           <h1>Login</h1>
 
           <iron-form content-type="application/json" handle-as="json" id="form">
-            <form action="http://127.0.0.1:3000/api/v1/login" method="GET">
+            <form action="http://127.0.0.1:3000/api/v1/login" method="POST">
               <paper-input
                 label="username"
                 name="username"
@@ -94,25 +94,13 @@ class GrLogin extends PolymerElement {
     return 'gr-login';
   }
 
-  static get properties() {
-    return {};
-  }
-
   constructor() {
     super();
 
+    this.addEventListener('iron-form-error', () => this._onIronFormError());
     this.addEventListener('iron-form-response', () =>
       this._onIronFormResponse()
     );
-    this.addEventListener('iron-form-error', () => this._onIronFormResponse());
-  }
-
-  /**
-   * On Iron Form Response
-   * @param {object} response
-   */
-  _onIronFormResponse(response) {
-    console.log('TCL: GrLogin -> _onIronFormResponse -> response', response);
   }
 
   /**
@@ -121,6 +109,14 @@ class GrLogin extends PolymerElement {
    */
   _onIronFormError(response) {
     console.log('TCL: GrLogin -> _onIronFormError -> response', response);
+  }
+
+  /**
+   * On Iron Form Response
+   * @param {object} response
+   */
+  _onIronFormResponse(response) {
+    console.log('TCL: GrLogin -> _onIronFormResponse -> response', response);
   }
 
   /**

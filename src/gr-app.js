@@ -107,20 +107,14 @@ class GrApp extends PolymerElement {
           <app-header slot="header">
             <app-toolbar class="header__toolbar">
               <div class="header__column">
-                <a class="header__link" href="[[rootPath]]event"
-                  ><paper-button>event</paper-button></a
-                >
-                <a class="header__link" href="[[rootPath]]venue"
-                  ><paper-button>venue</paper-button></a
-                >
-                <a class="header__link" href="[[rootPath]]guestbook"
-                  ><paper-button>guestbook</paper-button></a
+                <a class="header__link" href="[[rootPath]]chart"
+                  ><paper-button>Chart</paper-button></a
                 >
               </div>
 
               <div class="header__column header__column--center">
                 <a class="header__link" href="[[rootPath]]"
-                  ><paper-button>Guest Registration</paper-button></a
+                  ><paper-button>Slayers</paper-button></a
                 >
               </div>
 
@@ -134,11 +128,8 @@ class GrApp extends PolymerElement {
 
           <iron-pages selected="{{page}}" attr-for-selected="name" role="main">
             <gr-error name="error"></gr-error>
-            <gr-event name="event"></gr-event>
-            <gr-guestbook name="guestbook"></gr-guestbook>
             <gr-home name="home"></gr-home>
             <gr-login name="login"></gr-login>
-            <gr-venue name="venue"></gr-venue>
           </iron-pages>
         </app-header-layout>
       </app-drawer-layout>
@@ -183,20 +174,11 @@ class GrApp extends PolymerElement {
    */
   _pageChanged(page) {
     switch (page) {
-      case 'event':
-        import('./gr-event.js');
-        break;
-      case 'guestbook':
-        import('./gr-guestbook.js');
-        break;
       case 'home':
         import('./gr-home.js');
         break;
       case 'login':
         import('./gr-login.js');
-        break;
-      case 'venue':
-        import('./gr-venue.js');
         break;
       default:
         import('./gr-error.js');

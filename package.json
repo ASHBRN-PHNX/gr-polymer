@@ -1,10 +1,10 @@
 {
-  "name": "guest-registration-app",
+  "name": "goal-registration-app",
   "version": "1.0.0",
   "description": "",
   "author": "Alisdair Frost",
   "license": "MIT",
-  "repository": "https://github.com/pacificfrost/guest-registration.git",
+  "repository": "https://github.com/pacificfrost/goal-registration.git",
   "scripts": {
     "start-backend": "node app-be.js",
     "start-database": "mongod",
