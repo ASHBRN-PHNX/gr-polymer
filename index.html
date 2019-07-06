@@ -59,7 +59,14 @@
     <meta name="msapplication-tap-highlight" content="no" />
 
     <script>
-      window.GrAppGlobals = { rootPath: '/' };
+      window.GrAppGlobals = {
+        authenticated: false,
+        config: {
+          api: '/api/v1/',
+          origin: 'http://127.0.0.1:3000',
+        },
+        rootPath: '/',
+      };
 
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {

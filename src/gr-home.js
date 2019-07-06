@@ -1,6 +1,5 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 
-import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/iron-image/iron-image.js';
 
 import './shared-style.js';
@@ -23,17 +22,9 @@ class GrHome extends PolymerElement {
       </div>
 
       <div class="page">
-        <h1>Welcome to Guest Registration</h1>
+        <h1>Welcome to Slayers</h1>
         <div class="page__container"></div>
       </div>
-
-      <iron-ajax
-        auto
-        content-type="application/json"
-        handle-as="json"
-        id="ajax"
-        url="http://127.0.0.1:3000/api/v1/example"
-      ></iron-ajax>
     `;
   }
 

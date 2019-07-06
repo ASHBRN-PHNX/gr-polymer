@@ -1,5 +1,6 @@
 import { PolymerElement, html } from '@polymer/polymer/polymer-element.js';
 
+import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/iron-flex-layout/iron-flex-layout.js';
 import '@polymer/iron-form/iron-form.js';
 import '@polymer/iron-image/iron-image.js';
@@ -35,88 +36,137 @@ class GrLogin extends PolymerElement {
         }
       </style>
 
-      <div class="page">
-        <div class="page__container">
-          <h1>Login</h1>
+      <div hidden$="[[authenticated]]">
+        <section class="page">
+          <div class="page__container">
+            <h1>Login</h1>
 
-          <iron-form content-type="application/json" handle-as="json" id="form">
-            <form action="http://127.0.0.1:3000/api/v1/login" method="POST">
-              <paper-input
-                label="username"
-                name="username"
-                required
-                type="text"
-              ></paper-input>
-              <paper-input
-                label="password"
-                name="password"
-                required
-                type="password"
-              ></paper-input>
-
-              <div class="button-group button-group--center">
-                <paper-button class="button" on-click="_submit" raised
-                  >submit</paper-button
-                >
-              </div>
-            </form>
-          </iron-form>
-
-          <div class="account">
-            <a class="account__link" href="[[rootPath]]"
-              ><small>forgot password?</small></a
+            <iron-form
+              content-type="application/json"
+              handle-as="json"
+              id="form"
+              on-iron-form-error="_onIronFormError"
+              on-iron-form-response="_onIronFormResponse"
+              with-credentials
             >
-            <a class="account__link" href="[[rootPath]]"
-              ><small>sign-up</small></a
-            >
+              <form
+                action$="[[config.origin]][[config.api]]login"
+                method="POST"
+              >
+                <paper-input
+                  label="username"
+                  name="username"
+                  required
+                  type="text"
+                ></paper-input>
+                <paper-input
+                  label="password"
+                  name="password"
+                  required
+                  type="password"
+                ></paper-input>
+
+                <div class="button-group button-group--center">
+                  <paper-button class="button" on-click="_submit" raised
+                    >submit</paper-button
+                  >
+                </div>
+              </form>
+            </iron-form>
+
+            <div class="account">
+              <a class="account__link" href$="[[rootPath]]"
+                ><small>forgot password?</small></a
+              >
+              <a class="account__link" href$="[[rootPath]]"
+                ><small>sign-up</small></a
+              >
+            </div>
+
+            <div class="rule">
+              <h5>OR</h5>
+              <hr />
+              <h5>Login with:</h5>
+            </div>
+
+            <div class="button-group button-group--center">
+              <paper-button class="button button--facebook" raised
+                >facebook</paper-button
+              >
+              <paper-button class="button button--google" raised
+                >google</paper-button
+              >
+            </div>
           </div>
-
-          <div class="rule">
-            <h5>OR</h5>
-            <hr />
-            <h5>Login with:</h5>
-          </div>
-
-          <div class="button-group button-group--center">
-            <paper-button class="button button--facebook" raised
-              >facebook</paper-button
-            >
-            <paper-button class="button button--google" raised
-              >google</paper-button
-            >
-          </div>
-        </div>
+        </section>
       </div>
+
+      <div hidden$="[[!authenticated]]">
+        <section class="page">
+          <div class="button-group button-group--center">
+            <paper-button class="button" on-click="_logout" raised
+              >Logout</paper-button
+            >
+          </div>
+        </section>
+      </div>
+
+      <iron-ajax
+        content-type="application/json"
+        id="logout"
+        method="POST"
+        url="[[config.origin]][[config.api]]logout"
+        with-credentials
+      ></iron-ajax>
     `;
+  }
+
+  static get properties() {
+    return {
+      authenticated: {
+        type: Boolean,
+        value: () => GrAppGlobals.authenticated,
+      },
+    };
   }
 
   static get is() {
     return 'gr-login';
   }
 
-  constructor() {
-    super();
+  /**
+   * Logout
+   */
+  _logout() {
+    this.$.logout.generateRequest();
 
-    this.addEventListener('iron-form-error', () => this._onIronFormError());
-    this.addEventListener('iron-form-response', () =>
-      this._onIronFormResponse()
-    );
+    this.authenticated = false;
   }
 
   /**
    * On Iron Form Error
-   * @param {object} response
+   * @param {object} event
    */
-  _onIronFormError(response) {
-    console.log('TCL: GrLogin -> _onIronFormError -> response', response);
+  _onIronFormError(event) {
+    console.error(event.detail.request.response.message);
   }
 
   /**
    * On Iron Form Response
-   * @param {object} response
+   * @param {object} event
    */
-  _onIronFormResponse(response) {
-    console.log('TCL: GrLogin -> _onIronFormResponse -> response', response);
+  _onIronFormResponse(event) {
+    this._setAuthentication(event.detail.response.token);
+  }
+
+  /**
+   * Set authentication
+   * @param {string} token
+   */
+  _setAuthentication(token) {
+    localStorage.setItem('token', token);
+
+    this.authenticated = true;
   }
 
   /**

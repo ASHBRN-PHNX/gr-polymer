@@ -15,15 +15,15 @@ import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 import '@polymer/app-route/app-location.js';
 import '@polymer/app-route/app-route.js';
 
-import '@polymer/iron-pages/iron-pages.js';
+import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/iron-flex-layout/iron-flex-layout.js';
+import '@polymer/iron-pages/iron-pages.js';
 import '@polymer/iron-selector/iron-selector.js';
 
 import '@polymer/paper-button/paper-button.js';
 import '@polymer/paper-icon-button/paper-icon-button.js';
 
 setPassiveTouchGestures(true);
-
 setRootPath(GrAppGlobals.rootPath);
 
 class GrApp extends PolymerElement {
@@ -32,7 +32,7 @@ class GrApp extends PolymerElement {
       <style>
         :host {
           display: block;
-          --app-primary-color: #22294c;
+          --app-primary-color: #c30000;
         }
 
         app-drawer-layout:not([narrow]) [drawer-toggle] {
@@ -40,12 +40,12 @@ class GrApp extends PolymerElement {
         }
 
         app-header {
-          color: var(--app-primary-color);
-          background-color: #fff;
+          color: #fff;
+          background-color: #c30000;
         }
 
         app-header paper-icon-button {
-          --paper-icon-button-ink-color: white;
+          --paper-icon-button-ink-color: var(--app-primary-color);
         }
 
         .header__toolbar {
@@ -69,7 +69,7 @@ class GrApp extends PolymerElement {
         .header__link {
           text-decoration: none;
           font-size: 12px;
-          color: var(--app-primary-color);
+          color: #fff;
           text-transform: uppercase;
         }
 
@@ -94,11 +94,12 @@ class GrApp extends PolymerElement {
       <app-drawer-layout force-narrow fullbleed narrow="{{narrow}}">
         <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
           <app-toolbar class="drawer__toolbar">Menu</app-toolbar>
+
           <iron-selector
-            selected="[[page]]"
             attr-for-selected="name"
             class="drawer-list"
             role="navigation"
+            selected="[[page]]"
           >
           </iron-selector>
         </app-drawer>
@@ -107,32 +108,51 @@ class GrApp extends PolymerElement {
           <app-header slot="header">
             <app-toolbar class="header__toolbar">
               <div class="header__column">
-                <a class="header__link" href="[[rootPath]]chart"
+                <a class="header__link" href$="[[rootPath]]chart"
                   ><paper-button>Chart</paper-button></a
                 >
               </div>
 
               <div class="header__column header__column--center">
-                <a class="header__link" href="[[rootPath]]"
+                <a class="header__link" href$="[[rootPath]]"
                   ><paper-button>Slayers</paper-button></a
                 >
               </div>
 
               <div class="header__column header__column--right">
-                <a class="header__link" href="[[rootPath]]login"
-                  ><paper-button>login</paper-button></a
+                <a class="header__link" href$="[[rootPath]]login"
+                  ><paper-button>Login</paper-button></a
                 >
               </div>
             </app-toolbar>
           </app-header>
 
-          <iron-pages selected="{{page}}" attr-for-selected="name" role="main">
+          <iron-pages attr-for-selected="name" role="main" selected="{{page}}">
             <gr-error name="error"></gr-error>
+            <gr-guest name="guest"></gr-guest>
             <gr-home name="home"></gr-home>
             <gr-login name="login"></gr-login>
           </iron-pages>
         </app-header-layout>
       </app-drawer-layout>
+
+      <iron-ajax
+        auto
+        content-type="application/json"
+        id="authorize"
+        method="GET"
+        on-iron-ajax-response="_checkAuthorization"
+        url="[[config.origin]][[config.api]]authorize"
+        with-credentials
+      ></iron-ajax>
+
+      <iron-ajax
+        content-type="application/json"
+        id="logout"
+        method="POST"
+        url="[[config.origin]][[config.api]]logout"
+        with-credentials
+      ></iron-ajax>
     `;
   }
 
@@ -142,9 +162,12 @@ class GrApp extends PolymerElement {
 
   static get properties() {
     return {
+      authenticated: {
+        type: Object,
+        value: () => GrAppGlobals.authenticated,
+      },
       page: {
         type: String,
-        reflectToAttribute: true,
         observer: '_pageChanged',
       },
       routeData: Object,
@@ -157,19 +180,17 @@ class GrApp extends PolymerElement {
   }
 
   /**
-   * @param {String} page
+   * Check authorization
+   * @param {Object} event
    */
-  _routePageChanged(page) {
-    if (page && (page !== 'home' && page !== 'login') && !this.user) {
-      this.page = 'error';
-    } else {
-      !page ? (this.page = 'home') : (this.page = page);
+  _checkAuthorization(event) {
+    if (event.detail.response && event.detail.response.authorized) {
+      this.authenticated = true;
     }
-
-    this.$.drawer.close();
   }
 
   /**
+   * Page changed
    * @param {String} page
    */
   _pageChanged(page) {
@@ -187,7 +208,21 @@ class GrApp extends PolymerElement {
   }
 
   /**
-   *
+   * Route page changed
+   * @param {String} page
+   */
+  _routePageChanged(page) {
+    if (page && (page !== 'home' && page !== 'login') && !this.user) {
+      this.page = 'error';
+    } else {
+      !page ? (this.page = 'home') : (this.page = page);
+    }
+
+    this.$.drawer.close();
+  }
+
+  /**
+   * Show error
    */
   _showError() {
     this.page = 'error';

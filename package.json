@@ -36,6 +36,7 @@
     "passport-restify": "^1.0.1",
     "prpl-server": "^1.4.0",
     "restify": "^8.3.3",
+    "restify-cookies": "^0.2.5",
     "restify-cors-middleware": "^1.1.1",
     "restify-errors": "^8.0.0"
   },

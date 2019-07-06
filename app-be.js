@@ -7,6 +7,7 @@ if (!process.env.NODE_ENV) {
 const mongoose = require('mongoose');
 const passport = require('passport-restify');
 const restify = require('restify');
+const CookieParser = require('restify-cookies');
 const corsMiddleware = require('restify-cors-middleware');
 
 const config = require(`./config/config.${process.env.NODE_ENV}.js`);
@@ -14,7 +15,9 @@ const config = require(`./config/config.${process.env.NODE_ENV}.js`);
 require('./strategies/jwt.js');
 
 const cors = corsMiddleware({
-  origins: ['*'],
+  allowHeaders: ['x-jwt'],
+  credentials: true,
+  origins: ['http://127.0.0.1:3000', 'http://127.0.0.1:8081'],
 });
 
 const app = restify.createServer({
@@ -25,6 +28,8 @@ const app = restify.createServer({
 
 app.pre(cors.preflight);
 app.use(cors.actual);
+
+app.use(CookieParser.parse);
 
 app.use(passport.initialize());
 

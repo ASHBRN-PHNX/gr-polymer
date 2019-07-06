@@ -38,12 +38,6 @@ const UserSchema = new Schema(
  * @return {String}
  */
 UserSchema.methods.generateJWT = function(User) {
-  const today = new Date();
-
-  const exp = new Date(today);
-
-  exp.setDate(today.getDate() + 60);
-
   return jwt.sign({ _id: User._id }, config.JWT_SECRET, { expiresIn: '1d' });
 };
 
