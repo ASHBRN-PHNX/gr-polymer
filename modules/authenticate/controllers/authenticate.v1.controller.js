@@ -61,7 +61,7 @@ const register = async (req, res, next) => {
       secure: req.connection.encrypted ? true : false,
     });
 
-    res.send({ success: 'Token created.' });
+    res.send({ success: 'Token created.', user: user.toResponseJSON() });
 
     return next();
   } catch (err) {
