@@ -150,7 +150,9 @@ class GrApp extends PolymerElement {
                 ></paper-icon-button>
 
                 <iron-dropdown id="userDropdown">
-                  <paper-item>Logout</paper-item>
+                  <div slot="dropdown-content">
+                    <paper-item on-click="_logout">Logout</paper-item>
+                  </div>
                 </iron-dropdown>
               </div>
             </app-toolbar>
@@ -236,14 +238,11 @@ class GrApp extends PolymerElement {
   _logout() {
     this.$.logout.generateRequest();
 
-    this.dispatchEvent(
-      new CustomEvent('user-authentication', {
-        bubbles: true,
-        detail: {
-          authenticated: false,
-        },
-      })
-    );
+    this.authenticated = event.detail.authenticated;
+
+    GrAppGlobals.authenticated = event.detail.authenticated;
+
+    localStorage.removeItem('user');
 
     window.location('/');
   }
