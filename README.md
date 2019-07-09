@@ -1,9 +1,20 @@
-# Mae and Ali Wedding Guest Application
+# Introduction
 
-The purpose of this application is to:
+This application is designed for goal registration and monitoring.
 
-* Display to guests information for the wedding
-* Display to bridal party essential information
-* Coordinate bridal party and family
-* Allow for users to RSVP to the wedding
-* Allow users who are RSVPing to register guests
+# Setup
+
+    $ npm install
+
+In Mongo, create a database with the name: `gr-development`
+
+# Run
+
+    $ node app-be.js
+    $ polymer serve
+
+# Deploy
+
+    $ polymer build
+    $ node app-fe.js
+    $ node app-be.js
