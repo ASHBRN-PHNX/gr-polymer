@@ -142,7 +142,7 @@ class GrApp extends PolymerElement {
         id="authorize"
         method="GET"
         on-iron-ajax-response="_checkAuthorization"
-        url="[[config.origin]][[config.api]]authorize"
+        url$="[[config.origin]][[config.api]]authorize"
         with-credentials
       ></iron-ajax>
 
@@ -163,8 +163,12 @@ class GrApp extends PolymerElement {
   static get properties() {
     return {
       authenticated: {
-        type: Object,
+        type: Boolean,
         value: () => GrAppGlobals.authenticated,
+      },
+      config: {
+        type: Object,
+        value: () => GrAppGlobals.config,
       },
       page: {
         type: String,
@@ -184,6 +188,7 @@ class GrApp extends PolymerElement {
    * @param {Object} event
    */
   _checkAuthorization(event) {
+    console.log('TCL: GrApp -> _checkAuthorization -> event', event);
     if (event.detail.response && event.detail.response.authorized) {
       this.authenticated = true;
     }

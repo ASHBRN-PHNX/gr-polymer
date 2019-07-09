@@ -127,6 +127,10 @@ class GrLogin extends PolymerElement {
         type: Boolean,
         value: () => GrAppGlobals.authenticated,
       },
+      config: {
+        type: Object,
+        value: () => GrAppGlobals.config,
+      },
     };
   }
 
