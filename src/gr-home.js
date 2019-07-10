@@ -16,13 +16,17 @@ class GrHome extends PolymerElement {
       <div class="hero">
         <iron-image
           class="hero__image"
+          fade
           sizing="cover"
-          src="http://via.placeholder.com/1000/9e9e9e/000000?Text=hero"
+          src="images/pages/home/hero-goal.jpg"
         ></iron-image>
+
+        <div class="hero__content">
+          <h1 class="hero__text">Welcome, Slayers!</h1>
+        </div>
       </div>
 
       <div class="page">
-        <h1>Welcome Slayers</h1>
         <div class="page__container"></div>
       </div>
     `;

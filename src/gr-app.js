@@ -37,7 +37,7 @@ class GrApp extends PolymerElement {
       <style>
         :host {
           display: block;
-          --app-primary-color: #c30000;
+          --app-primary-color: #5b83c5;
           --app-toolbar-height: 50px;
         }
 
@@ -46,7 +46,7 @@ class GrApp extends PolymerElement {
         }
 
         .header {
-          background-color: #c30000;
+          background-color: var(--app-primary-color);
           color: #fff;
           height: var(--app-toolbar-height);
         }
@@ -105,9 +105,9 @@ class GrApp extends PolymerElement {
         }
 
         .spinner:not([hidden]) {
+          @apply --layout-center-center;
           @apply --layout-fit;
           @apply --layout-horizontal;
-          @apply --layout-center-center;
           background: rgba(255, 255, 255, 0.8);
         }
       </style>

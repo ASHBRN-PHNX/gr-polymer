@@ -6,6 +6,15 @@ documentContainer.innerHTML = `
   <dom-module id="shared-style">
     <template>
       <style>
+        :host {
+          --iron-image-placeholder: {
+            filter: blur(10px);
+            overflow: hidden;
+            transform: scale(1.1);
+            width: 110%;
+          }
+        }
+
         .button {
           display: inline-block;
           text-align: center;
@@ -34,7 +43,7 @@ documentContainer.innerHTML = `
         }
 
         .hero {
-          height: 300px;
+          height: 75vh;
           position: relative;
           width: 100%;
         }
@@ -42,6 +51,16 @@ documentContainer.innerHTML = `
         .hero__image {
           height: 100%;
           width: 100%;
+        }
+
+        .hero__content {
+          @apply --layout-center-center;
+          @apply --layout-fit;
+          @apply --layout-horizontal;
+        }
+
+        .hero__text {
+          color: var(--app-primary-color);
         }
 
         .page {
