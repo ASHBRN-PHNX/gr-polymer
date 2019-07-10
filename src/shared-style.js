@@ -45,7 +45,10 @@ documentContainer.innerHTML = `
         }
 
         .page {
+          margin: 0 auto;
+          max-width: 1200px;
           padding: 16px;
+          width: 100%;
         }
       </style>
     </template>

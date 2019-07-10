@@ -22,7 +22,7 @@ class GrHome extends PolymerElement {
       </div>
 
       <div class="page">
-        <h1>Welcome to Slayers</h1>
+        <h1>Welcome Slayers</h1>
         <div class="page__container"></div>
       </div>
     `;

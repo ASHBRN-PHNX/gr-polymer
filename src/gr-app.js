@@ -16,7 +16,6 @@ import '@polymer/app-route/app-location.js';
 import '@polymer/app-route/app-route.js';
 
 import '@polymer/iron-ajax/iron-ajax.js';
-import '@polymer/iron-dropdown/iron-dropdown.js';
 import '@polymer/iron-flex-layout/iron-flex-layout.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/iron-pages/iron-pages.js';
@@ -25,6 +24,9 @@ import '@polymer/iron-selector/iron-selector.js';
 import '@polymer/paper-button/paper-button.js';
 import '@polymer/paper-icon-button/paper-icon-button.js';
 import '@polymer/paper-item/paper-item.js';
+import '@polymer/paper-listbox/paper-listbox.js';
+import '@polymer/paper-menu-button/paper-menu-button.js';
+import '@polymer/paper-spinner/paper-spinner.js';
 
 setPassiveTouchGestures(true);
 setRootPath(GrAppGlobals.rootPath);
@@ -45,10 +47,6 @@ class GrApp extends PolymerElement {
         .header {
           background-color: #c30000;
           color: #fff;
-        }
-
-        .header__icon {
-          --paper-icon-button-ink-color: #fff;
         }
 
         .header__toolbar {
@@ -79,6 +77,26 @@ class GrApp extends PolymerElement {
         .header__title {
           display: inline-block;
           width: auto;
+        }
+
+        .menu-button[hidden] {
+          display: none;
+        }
+
+        .menu-button__icon {
+          --paper-icon-button-ink-color: #fff;
+        }
+
+        .menu-button__link {
+          color: #000;
+          text-decoration: none;
+        }
+
+        .spinner:not([hidden]) {
+          @apply --layout-fit;
+          @apply --layout-horizontal;
+          @apply --layout-center-center;
+          background: rgba(255, 255, 255, 0.8);
         }
       </style>
 
@@ -142,18 +160,25 @@ class GrApp extends PolymerElement {
                   ><paper-button>Login</paper-button></a
                 >
 
-                <paper-icon-button
-                  class="header__icon"
+                <paper-menu-button
+                  class="menu-button"
                   hidden$="[[!authenticated]]"
-                  icon="icons:account-circle"
-                  on-click="_toggleUserMenu"
-                ></paper-icon-button>
+                  horizontal-align="right"
+                  no-overlap
+                >
+                  <paper-icon-button
+                    class="menu-button__icon"
+                    icon="icons:account-circle"
+                    slot="dropdown-trigger"
+                  ></paper-icon-button>
 
-                <iron-dropdown id="userDropdown">
-                  <div slot="dropdown-content">
+                  <paper-listbox slot="dropdown-content">
                     <paper-item on-click="_logout">Logout</paper-item>
-                  </div>
-                </iron-dropdown>
+                    <a class="menu-button__link" href$="[[rootPath]]account">
+                      <paper-item>Settings</paper-item>
+                    </a>
+                  </paper-listbox>
+                </paper-menu-button>
               </div>
             </app-toolbar>
           </app-header>
@@ -178,6 +203,7 @@ class GrApp extends PolymerElement {
         id="authorize"
         method="GET"
         on-iron-ajax-response="_checkAuthorization"
+        loading="{{loading}}"
         url$="[[config.origin]][[config.api]]authorize"
         with-credentials
       ></iron-ajax>
@@ -189,6 +215,13 @@ class GrApp extends PolymerElement {
         url="[[config.origin]][[config.api]]logout"
         with-credentials
       ></iron-ajax>
+
+      <div class="spinner" hidden$="[[!loading]]">
+        <paper-spinner
+          active="[[loading]]"
+          class="spinner__element"
+        ></paper-spinner>
+      </div>
     `;
   }
 
@@ -206,6 +239,7 @@ class GrApp extends PolymerElement {
         type: Object,
         value: () => GrAppGlobals.config,
       },
+      loading: Boolean,
       page: {
         observer: '_pageChanged',
         type: String,
@@ -238,13 +272,11 @@ class GrApp extends PolymerElement {
   _logout() {
     this.$.logout.generateRequest();
 
-    this.authenticated = event.detail.authenticated;
+    this.authenticated = false;
 
-    GrAppGlobals.authenticated = event.detail.authenticated;
+    GrAppGlobals.authenticated = false;
 
     localStorage.removeItem('user');
-
-    window.location('/');
   }
 
   /**
@@ -252,19 +284,19 @@ class GrApp extends PolymerElement {
    * @param {object} event
    */
   _onUserAuthentication(event) {
+    if (!event.detail.authenticated) {
+      this._logout();
+    }
+
+    const user = event.detail.user;
+
     this.authenticated = event.detail.authenticated;
 
     GrAppGlobals.authenticated = event.detail.authenticated;
 
-    if (this.authenticated) {
-      const user = event.detail.user;
+    localStorage.setItem('user', JSON.stringify(user));
 
-      localStorage.setItem('user', user);
-
-      return;
-    }
-
-    localStorage.removeItem('user');
+    window.location = '/';
   }
 
   /**
@@ -290,7 +322,7 @@ class GrApp extends PolymerElement {
    * @param {String} page
    */
   _routePageChanged(page) {
-    if (page && (page !== 'home' && page !== 'login') && !this.user) {
+    if (page && (page !== 'home' && page !== 'login') && !this.authorized) {
       this.page = 'error';
     } else {
       !page ? (this.page = 'home') : (this.page = page);
@@ -304,13 +336,6 @@ class GrApp extends PolymerElement {
    */
   _showError() {
     this.page = 'error';
-  }
-
-  /**
-   * Toggle user menu
-   */
-  _toggleUserMenu() {
-    this.$.userDropdown.toggle();
   }
 }
 

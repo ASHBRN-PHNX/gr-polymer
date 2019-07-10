@@ -140,8 +140,6 @@ class GrLogin extends PolymerElement {
         },
       })
     );
-
-    window.location('/');
   }
 
   /**

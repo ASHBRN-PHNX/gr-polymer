@@ -24,11 +24,15 @@
     "@polymer/iron-media-query": "^3.0.1",
     "@polymer/iron-pages": "^3.0.1",
     "@polymer/iron-selector": "^3.0.1",
+    "@polymer/neon-animation": "^3.0.1",
     "@polymer/paper-button": "^3.0.1",
     "@polymer/paper-dropdown-menu": "^3.0.1",
     "@polymer/paper-icon-button": "^3.0.2",
     "@polymer/paper-input": "^3.0.2",
     "@polymer/paper-item": "^3.0.1",
+    "@polymer/paper-listbox": "^3.0.1",
+    "@polymer/paper-menu-button": "^3.0.1",
+    "@polymer/paper-spinner": "^3.0.2",
     "@polymer/polymer": "^3.2.0",
     "@webcomponents/webcomponentsjs": "^2.2.10",
     "acl-restify": "0.0.3",
@@ -42,7 +46,8 @@
     "restify": "^8.3.3",
     "restify-cookies": "^0.2.5",
     "restify-cors-middleware": "^1.1.1",
-    "restify-errors": "^8.0.0"
+    "restify-errors": "^8.0.0",
+    "web-animations-js": "^2.3.2"
   },
   "devDependencies": {
     "eslint": "^6.0.0",

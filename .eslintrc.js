@@ -14,8 +14,6 @@ module.exports = {
   plugins: ['prettier'],
   rules: {
     'require-jsdoc': 0,
-    rules: {
-      semi: ['error', 'never'],
-    },
+    semi: 1,
   },
 };
