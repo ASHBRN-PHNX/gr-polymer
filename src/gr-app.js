@@ -38,6 +38,7 @@ class GrApp extends PolymerElement {
         :host {
           display: block;
           --app-primary-color: #c30000;
+          --app-toolbar-height: 50px;
         }
 
         .drawer-layout:not([narrow]) [drawer-toggle] {
@@ -47,11 +48,13 @@ class GrApp extends PolymerElement {
         .header {
           background-color: #c30000;
           color: #fff;
+          height: var(--app-toolbar-height);
         }
 
         .header__toolbar {
           @apply --layout-horizontal;
           @apply --layout-justified;
+          height: var(--app-toolbar-height);
         }
 
         .header__column {
@@ -79,6 +82,10 @@ class GrApp extends PolymerElement {
           width: auto;
         }
 
+        .menu-button {
+          padding: 5px;
+        }
+
         .menu-button[hidden] {
           display: none;
         }
@@ -87,8 +94,13 @@ class GrApp extends PolymerElement {
           --paper-icon-button-ink-color: #fff;
         }
 
+        .menu-button__item {
+          cursor: pointer;
+        }
+
         .menu-button__link {
           color: #000;
+          cursor: pointer;
           text-decoration: none;
         }
 
@@ -173,10 +185,12 @@ class GrApp extends PolymerElement {
                   ></paper-icon-button>
 
                   <paper-listbox slot="dropdown-content">
-                    <paper-item on-click="_logout">Logout</paper-item>
                     <a class="menu-button__link" href$="[[rootPath]]account">
                       <paper-item>Settings</paper-item>
                     </a>
+                    <paper-item class="menu-button__item" on-click="_logout"
+                      >Logout</paper-item
+                    >
                   </paper-listbox>
                 </paper-menu-button>
               </div>
@@ -246,6 +260,10 @@ class GrApp extends PolymerElement {
       },
       routeData: Object,
       subroute: Object,
+      user: {
+        type: Object,
+        value: () => JSON.parse(localStorage.getItem('user')),
+      },
       _opened: Boolean,
     };
   }
@@ -273,10 +291,13 @@ class GrApp extends PolymerElement {
     this.$.logout.generateRequest();
 
     this.authenticated = false;
+    this.user = {};
 
     GrAppGlobals.authenticated = false;
 
     localStorage.removeItem('user');
+
+    window.location = '/';
   }
 
   /**
@@ -288,13 +309,13 @@ class GrApp extends PolymerElement {
       this._logout();
     }
 
-    const user = event.detail.user;
+    this.user = event.detail.user;
 
     this.authenticated = event.detail.authenticated;
 
     GrAppGlobals.authenticated = event.detail.authenticated;
 
-    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('user', JSON.stringify(this.user));
 
     window.location = '/';
   }
